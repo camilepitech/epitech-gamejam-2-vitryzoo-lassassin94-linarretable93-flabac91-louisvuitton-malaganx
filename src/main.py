@@ -50,9 +50,42 @@ def run(screen):
     player_image = pygame.image.load("ressources/hoppy.png")
     player_sprite_rect = pygame.Rect(0, 50, 48, 50)
     player_sprite_image = player_image.subsurface(player_sprite_rect)
+    tab = [
+    "##############################",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "#                            #",
+    "##############################"
+    ]
     while running:
         running = close_window()
         screen.fill("white")
+        x = 0
+        y = 0
+        for line in tab:
+            for c in line:
+                if c == '#':
+                    pygame.draw.rect(screen, "red", (x * 48, y * 50, 48, 50))
+                if c == ' ':
+                    pygame.draw.rect(screen, "blue", (x * 48, y * 50, 48, 50))
+                x += 1
+            x = 0
+            y += 1
         move_player(player_rect, dt, player_sprite_rect)
         player_sprite_image = player_image.subsurface(player_sprite_rect)
         screen.blit(player_sprite_image, player_rect)
@@ -61,7 +94,7 @@ def run(screen):
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((1280, 720))
+    screen = pygame.display.set_mode((1440, 1000))
     run(screen)
     pygame.quit()
 
