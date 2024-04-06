@@ -30,7 +30,7 @@ def move_player(player_rect, dt, player_sprite_rect):
             player_rect.y -= 300 * dt
             anime_player(player_sprite_rect, 148)
     if keys[pygame.K_s]:
-        if (player_rect.bottom) <= 720:
+        if (player_rect.bottom) <= 1000:
             player_rect.y += 300 * dt
             anime_player(player_sprite_rect, 0)
     if keys[pygame.K_q]:
@@ -38,15 +38,26 @@ def move_player(player_rect, dt, player_sprite_rect):
             player_rect.x -= 300 * dt
             anime_player(player_sprite_rect, 50)
     if keys[pygame.K_d]:
-        if (player_rect.right) <= 1280:
+        if (player_rect.right) <= 1440:
             player_rect.x += 300 * dt
             anime_player(player_sprite_rect, 100)
+
+def draw_map(screen, tab, asset_dico):
+    x = 0
+    y = 0
+    for line in tab:
+        for c in line:
+            if c in asset_dico:
+                screen.blit(asset_dico[c], (x * 48, y * 50, 48, 50))
+            x += 1
+        x = 0
+        y += 1
 
 def run(screen):
     clock = pygame.time.Clock()
     running = True
     dt = 0
-    player_rect = pygame.Rect(screen.get_width() / 2, screen.get_height() / 2, 40, 40)
+    player_rect = pygame.Rect(screen.get_width() / 2, screen.get_height() / 2, 48, 50)
     player_image = pygame.image.load("ressources/hoppy.png")
     player_sprite_rect = pygame.Rect(0, 50, 48, 50)
     player_sprite_image = player_image.subsurface(player_sprite_rect)
@@ -72,20 +83,13 @@ def run(screen):
     "#                            #",
     "##############################"
     ]
+    image = pygame.image.load("ressources/Wall.png")
+    image2 = pygame.image.load("ressources/dune.png")
+    asset_dico = {'#': image, ' ': image2}
     while running:
         running = close_window()
         screen.fill("white")
-        x = 0
-        y = 0
-        for line in tab:
-            for c in line:
-                if c == '#':
-                    pygame.draw.rect(screen, "red", (x * 48, y * 50, 48, 50))
-                if c == ' ':
-                    pygame.draw.rect(screen, "blue", (x * 48, y * 50, 48, 50))
-                x += 1
-            x = 0
-            y += 1
+        draw_map(screen, tab, asset_dico)
         move_player(player_rect, dt, player_sprite_rect)
         player_sprite_image = player_image.subsurface(player_sprite_rect)
         screen.blit(player_sprite_image, player_rect)
