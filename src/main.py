@@ -128,6 +128,7 @@ def check_collision_indice(player, tab, mini_games, screen):
             player.rect.y -= 50
         else:
             tab[tile_y] = tab[tile_y][:tile_x] + ' ' + tab[tile_y][tile_x + 1:]
+            player.score += 1
 
 def check_collision_exit(player, tab, nb):
     player_rect = player.rect

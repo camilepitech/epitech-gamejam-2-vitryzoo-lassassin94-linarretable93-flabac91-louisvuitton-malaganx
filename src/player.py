@@ -15,6 +15,7 @@ class Player:
         self.hoppy = pygame.image.load("ressources/hoppy.png")
         self.life = pygame.image.load("ressources/life.png")
         self.nb_life = 7
+        self.score = 0
 
     def move(self, keys, dt):
         if keys[pygame.K_z] and self.rect.top >= 0:
@@ -43,3 +44,6 @@ class Player:
         screen.blit(sprite_hoppy, self.rect)
         for i in range(self.nb_life):
             screen.blit(self.life, (i * 20, 0))
+        font = pygame.font.Font(None, 36)
+        score_text = font.render(f"Score: {self.score}", True, (255, 255, 255))
+        screen.blit(score_text, (0, 20)) 
