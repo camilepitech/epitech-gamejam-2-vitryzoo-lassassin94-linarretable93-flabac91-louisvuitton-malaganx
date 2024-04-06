@@ -129,6 +129,23 @@ def check_collision_indice(player, tab, mini_games, screen):
         else:
             tab[tile_y] = tab[tile_y][:tile_x] + ' ' + tab[tile_y][tile_x + 1:]
 
+def check_collision_exit(player, tab, nb):
+    player_rect = player.rect
+    player_x, player_y = player_rect.centerx, player_rect.centery
+    tile_x = player_x // 48
+    tile_y = player_y // 50
+    ok = 1
+    if tab[tile_y][tile_x] == 'o':
+        tab[9] = tab[9][:29] + '#'
+        tab[10] = tab[10][:29] + '#'
+        player.rect.x = 750
+        player.rect.y = 500
+        nb += 1
+        ok = 0
+        for _ in range(nb):
+            put_indice_map(tab)
+    return nb, ok
+
 def run_game(screen):
     clock = pygame.time.Clock()
     dt = 0
@@ -155,7 +172,8 @@ def run_game(screen):
     "#                            #",
     "##############################"
     ]
-    for _ in range(3):
+    nb = 3
+    for _ in range(nb):
         put_indice_map(tab)
     image = pygame.image.load("ressources/wall.png")
     image2 = pygame.image.load("ressources/ground.jpg")
@@ -163,6 +181,7 @@ def run_game(screen):
     image4 = pygame.image.load("ressources/arrow.png")
     asset_dico = {'#': image, ' ': image2, 'x': image3, 'o': image4}
     mini_games = [mini_game0, mini_game1, mini_game2]
+    ok = 0
     while True:
         if close_window() == False:
             return
@@ -174,10 +193,14 @@ def run_game(screen):
         keys = pygame.key.get_pressed()
         player.move(keys, dt)
         check_collision_indice(player, tab, mini_games, screen)
+        if ok == 1:
+            nb, ok = check_collision_exit(player, tab, nb)
         player.draw(screen)
-        if all('x' not in row for row in tab):
-            tab[9] = tab[9][:29] + 'o'
-            tab[10] = tab[10][:29] + 'o'
+        if ok == 0:
+            if all('x' not in row for row in tab):
+                tab[9] = tab[9][:29] + 'o'
+                tab[10] = tab[10][:29] + 'o'
+                ok = 1
         pygame.display.flip()
         dt = clock.tick(60) / 1000
 
