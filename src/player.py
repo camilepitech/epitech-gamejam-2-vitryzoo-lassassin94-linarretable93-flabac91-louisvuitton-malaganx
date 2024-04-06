@@ -13,7 +13,7 @@ class Player:
         self.rect = pygame.Rect(x, y, 48, 50)
         self.sprite_rect = pygame.Rect(0, 50, 48, 50)
         self.hoppy = pygame.image.load("ressources/hoppy.png")
-        self.life = pygame.image.load("ressources/heart.png")
+        self.life = pygame.image.load("ressources/life.png")
         self.nb_life = 7
 
     def move(self, keys, dt):
@@ -41,7 +41,5 @@ class Player:
     def draw(self, screen):
         sprite_hoppy = self.hoppy.subsurface(self.sprite_rect)
         screen.blit(sprite_hoppy, self.rect)
-        # for i in range(self.nb_life):
-        #     pygame.draw.rect(screen, (255, 0, 0), (i * 20, 0, 15, 15))
         for i in range(self.nb_life):
             screen.blit(self.life, (i * 20, 0))
