@@ -25,6 +25,8 @@ def draw_map(screen, tab, asset_dico):
             if c in asset_dico:
                 if c == 'x':
                     screen.blit(asset_dico[' '], (x * 48, y * 50, 48, 50))
+                if c == 'o':
+                    screen.blit(asset_dico[' '], (x * 48, y * 50, 48, 50))
                 screen.blit(asset_dico[c], (x * 48, y * 50, 48, 50))
             x += 1
         x = 0
@@ -158,7 +160,8 @@ def run_game(screen):
     image = pygame.image.load("ressources/wall.png")
     image2 = pygame.image.load("ressources/ground.jpg")
     image3 = pygame.image.load("ressources/key.png")
-    asset_dico = {'#': image, ' ': image2, 'x': image3}
+    image4 = pygame.image.load("ressources/arrow.png")
+    asset_dico = {'#': image, ' ': image2, 'x': image3, 'o': image4}
     mini_games = [mini_game0, mini_game1, mini_game2]
     while True:
         if close_window() == False:
@@ -172,6 +175,9 @@ def run_game(screen):
         player.move(keys, dt)
         check_collision_indice(player, tab, mini_games, screen)
         player.draw(screen)
+        if all('x' not in row for row in tab):
+            tab[9] = tab[9][:29] + 'o'
+            tab[10] = tab[10][:29] + 'o'
         pygame.display.flip()
         dt = clock.tick(60) / 1000
 
