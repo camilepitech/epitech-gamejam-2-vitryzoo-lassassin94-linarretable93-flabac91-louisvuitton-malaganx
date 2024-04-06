@@ -36,6 +36,23 @@ def put_indice_map(tab):
     else:
         put_indice_map(tab)
 
+def mini_game(screen):
+    font = pygame.font.Font(None, 36)
+    window_width, window_height = screen.get_size()
+    quit_button = Button("Quit", font, (0, 0, 0), ((window_width - 200) // 2, (window_height + 50) // 2, 200, 50))
+    buttons = [quit_button]
+    while True:
+        screen.fill((255, 255, 255))
+        for button in buttons:
+            button.draw(screen)
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+            for button in buttons:
+                if button.handle_event(event, screen) and button.text == "Quit":
+                    return False
+
 def run_game(screen):
     clock = pygame.time.Clock()
     dt = 0
@@ -75,6 +92,13 @@ def run_game(screen):
         draw_map(screen, tab, asset_dico)
         keys = pygame.key.get_pressed()
         player.move(keys, dt)
+        player_rect = player.rect
+        player_x, player_y = player_rect.centerx, player_rect.centery
+        tile_x = player_x // 48
+        tile_y = player_y // 50
+        if tab[tile_y][tile_x] == 'x':
+            mini_game(screen)
+            tab[tile_y] = tab[tile_y][:tile_x] + ' ' + tab[tile_y][tile_x + 1:]
         player.draw(screen)
         pygame.display.flip()
         dt = clock.tick(60) / 1000
