@@ -9,6 +9,7 @@
 import pygame
 import random
 from player import Player
+from button import Button
 
 def close_window():
     for event in pygame.event.get():
@@ -35,9 +36,8 @@ def put_indice_map(tab):
     else:
         put_indice_map(tab)
 
-def run(screen):
+def run_game(screen):
     clock = pygame.time.Clock()
-    running = True
     dt = 0
     player = Player(screen.get_width() / 2, screen.get_height() / 2)
     tab = [
@@ -68,9 +68,10 @@ def run(screen):
     image2 = pygame.image.load("ressources/dune.png")
     image3 = pygame.image.load("ressources/apple.png")
     asset_dico = {'#': image, ' ': image2, 'x': image3}
-    while running:
-        running = close_window()
-        screen.fill("white")
+    while True:
+        if close_window() == False:
+            return
+        screen.fill((255, 255, 255))
         draw_map(screen, tab, asset_dico)
         keys = pygame.key.get_pressed()
         player.move(keys, dt)
@@ -78,10 +79,28 @@ def run(screen):
         pygame.display.flip()
         dt = clock.tick(60) / 1000
 
+def main_menu(screen):
+    font = pygame.font.Font(None, 36)
+    window_width, window_height = screen.get_size()
+    start_button = Button("Click to Start", font, (0, 0, 0), ((window_width - 200) // 2, (window_height - 50) // 2, 200, 50), run_game)
+    quit_button = Button("Quit", font, (0, 0, 0), ((window_width - 200) // 2, (window_height + 50) // 2 + 20, 200, 50))
+    buttons = [start_button, quit_button]
+    while True:
+        screen.fill((255, 255, 255))
+        for button in buttons:
+            button.draw(screen)
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+            for button in buttons:
+                if button.handle_event(event, screen) and button.text == "Quit":
+                    return False
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((1440, 1000))
-    run(screen)
+    main_menu(screen)
     pygame.quit()
 
 if __name__ == "__main__":
