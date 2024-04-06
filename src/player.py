@@ -40,3 +40,5 @@ class Player:
     def draw(self, screen):
         sprite_image = self.image.subsurface(self.sprite_rect)
         screen.blit(sprite_image, self.rect)
+        for i in range(self.live):
+            pygame.draw.rect(screen, (255, 0, 0), (i * 20, 0, 15, 15))
