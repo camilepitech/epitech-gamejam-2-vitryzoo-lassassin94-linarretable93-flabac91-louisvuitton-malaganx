@@ -7,6 +7,7 @@
 ##
 
 import pygame
+import random
 from player import Player
 
 def close_window():
@@ -25,6 +26,14 @@ def draw_map(screen, tab, asset_dico):
             x += 1
         x = 0
         y += 1
+
+def put_indice_map(tab):
+    row = random.randint(0, len(tab) - 1)
+    col = random.randint(0, len(tab[row]) - 1)
+    if tab[row][col] == ' ':
+        tab[row] = tab[row][:col] + 'x' + tab[row][col+1:]
+    else:
+        put_indice_map(tab)
 
 def run(screen):
     clock = pygame.time.Clock()
@@ -53,9 +62,12 @@ def run(screen):
     "#                            #",
     "##############################"
     ]
+    for _ in range(3):
+        put_indice_map(tab)
     image = pygame.image.load("ressources/Wall.png")
     image2 = pygame.image.load("ressources/dune.png")
-    asset_dico = {'#': image, ' ': image2}
+    image3 = pygame.image.load("ressources/apple.png")
+    asset_dico = {'#': image, ' ': image2, 'x': image3}
     while running:
         running = close_window()
         screen.fill("white")

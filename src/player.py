@@ -13,6 +13,7 @@ class Player:
         self.rect = pygame.Rect(x, y, 48, 50)
         self.sprite_rect = pygame.Rect(0, 50, 48, 50)
         self.image = pygame.image.load("ressources/hoppy.png")
+        self.live = 3
 
     def move(self, keys, dt):
         if keys[pygame.K_z] and self.rect.top >= 0:
