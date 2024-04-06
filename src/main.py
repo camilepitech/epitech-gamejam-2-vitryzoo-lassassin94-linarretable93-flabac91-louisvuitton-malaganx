@@ -36,6 +36,23 @@ def put_indice_map(tab):
     else:
         put_indice_map(tab)
 
+def print_game_over(screen):
+    font = pygame.font.Font(None, 36)
+    window_width, window_height = screen.get_size()
+    quit_button = Button("Quit", font, (255, 255, 255), ((window_width - 200) // 2, (window_height + 50) // 2, 200, 50))
+    buttons = [quit_button]
+    while True:
+        screen.fill((0, 0, 0))
+        for button in buttons:
+            button.draw(screen)
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+            for button in buttons:
+                if button.handle_event(event, screen) and button.text == "Quit":
+                     return False
+
 def mini_game(screen):
     font = pygame.font.Font(None, 36)
     window_width, window_height = screen.get_size()
@@ -88,6 +105,9 @@ def run_game(screen):
     while True:
         if close_window() == False:
             return
+        if player.live == 0:
+            if print_game_over(screen) == False:
+                return
         screen.fill((255, 255, 255))
         draw_map(screen, tab, asset_dico)
         keys = pygame.key.get_pressed()
@@ -99,6 +119,7 @@ def run_game(screen):
         if tab[tile_y][tile_x] == 'x':
             mini_game(screen)
             tab[tile_y] = tab[tile_y][:tile_x] + ' ' + tab[tile_y][tile_x + 1:]
+            player.live -= 1
         player.draw(screen)
         pygame.display.flip()
         dt = clock.tick(60) / 1000
@@ -119,6 +140,7 @@ def main_menu(screen):
                 return False
             for button in buttons:
                 if button.handle_event(event, screen) and button.text == "Quit":
+                    pygame.quit()
                     return False
 
 def main():
