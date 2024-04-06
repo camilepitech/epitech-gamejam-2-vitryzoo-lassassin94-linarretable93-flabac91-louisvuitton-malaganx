@@ -23,6 +23,8 @@ def draw_map(screen, tab, asset_dico):
     for line in tab:
         for c in line:
             if c in asset_dico:
+                if c == 'x':
+                    screen.blit(asset_dico[' '], (x * 48, y * 50, 48, 50))
                 screen.blit(asset_dico[c], (x * 48, y * 50, 48, 50))
             x += 1
         x = 0
@@ -120,7 +122,7 @@ def check_collision_indice(player, tab, mini_games, screen):
     tile_y = player_y // 50
     if tab[tile_y][tile_x] == 'x':
         if mini_games[random.randint(0, 2)](screen) == False:
-            player.live -= 1
+            player.nb_life -= 1
             player.rect.y -= 50
         else:
             tab[tile_y] = tab[tile_y][:tile_x] + ' ' + tab[tile_y][tile_x + 1:]
@@ -153,15 +155,15 @@ def run_game(screen):
     ]
     for _ in range(3):
         put_indice_map(tab)
-    image = pygame.image.load("ressources/Wall.png")
-    image2 = pygame.image.load("ressources/dune.png")
-    image3 = pygame.image.load("ressources/apple.png")
+    image = pygame.image.load("ressources/wall.png")
+    image2 = pygame.image.load("ressources/ground.jpg")
+    image3 = pygame.image.load("ressources/key.png")
     asset_dico = {'#': image, ' ': image2, 'x': image3}
     mini_games = [mini_game0, mini_game1, mini_game2]
     while True:
         if close_window() == False:
             return
-        if player.live == 0:
+        if player.nb_life == 0:
             if print_game_over(screen) == False:
                 return
         screen.fill((255, 255, 255))

@@ -12,8 +12,9 @@ class Player:
     def __init__(self, x, y):
         self.rect = pygame.Rect(x, y, 48, 50)
         self.sprite_rect = pygame.Rect(0, 50, 48, 50)
-        self.image = pygame.image.load("ressources/hoppy.png")
-        self.live = 3
+        self.hoppy = pygame.image.load("ressources/hoppy.png")
+        self.life = pygame.image.load("ressources/heart.png")
+        self.nb_life = 7
 
     def move(self, keys, dt):
         if keys[pygame.K_z] and self.rect.top >= 0:
@@ -38,7 +39,9 @@ class Player:
             self.sprite_rect.top = top
 
     def draw(self, screen):
-        sprite_image = self.image.subsurface(self.sprite_rect)
-        screen.blit(sprite_image, self.rect)
-        for i in range(self.live):
-            pygame.draw.rect(screen, (255, 0, 0), (i * 20, 0, 15, 15))
+        sprite_hoppy = self.hoppy.subsurface(self.sprite_rect)
+        screen.blit(sprite_hoppy, self.rect)
+        # for i in range(self.nb_life):
+        #     pygame.draw.rect(screen, (255, 0, 0), (i * 20, 0, 15, 15))
+        for i in range(self.nb_life):
+            screen.blit(self.life, (i * 20, 0))
