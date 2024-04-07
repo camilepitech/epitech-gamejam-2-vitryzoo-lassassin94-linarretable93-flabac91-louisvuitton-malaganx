@@ -8,6 +8,7 @@
 
 import pygame
 import random
+import time
 from src.player import Player
 from src.button import Button
 from src.text import Text
@@ -84,6 +85,14 @@ def mini_game2(screen):
                 if button.handle_event(event, screen) and button.text == "minigame2":
                     return False
 
+def display_message(screen, message, color):
+    font = pygame.font.Font(None, 64)
+    text = font.render(message, True, color)
+    text_rect = text.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2))
+    screen.blit(text, text_rect)
+    pygame.display.flip()
+    time.sleep(2)
+
 def check_collision_indice(player, tab, mini_games, screen, sound_effect):
     player_rect = player.rect
     player_x, player_y = player_rect.centerx, player_rect.centery
@@ -94,8 +103,11 @@ def check_collision_indice(player, tab, mini_games, screen, sound_effect):
             player.nb_life -= 1
             player.rect.y -= 50
             sound_effect.play()
+            display_message(screen, "You Lose", (255, 0, 0))
         else:
             tab[tile_y] = tab[tile_y][:tile_x] + ' ' + tab[tile_y][tile_x + 1:]
+            player.score += 1
+            display_message(screen, "You win", (255, 255, 0))
             player.score += 1
 
 def check_collision_exit(player, tab, nb):
