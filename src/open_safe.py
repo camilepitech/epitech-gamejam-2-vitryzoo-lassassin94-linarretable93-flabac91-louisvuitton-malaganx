@@ -7,6 +7,8 @@
 ##
 
 import pygame
+from src.text import Text
+from src.button import Button
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -17,7 +19,38 @@ def afficher_texte(texte, x, y, font, screen):
     surface_texte = font.render(texte, True, WHITE)
     screen.blit(surface_texte, (x, y))
 
+def explication_open_safe(screen):
+    font_title = pygame.font.Font(None, 64)
+    menu_title = Text("Open safe", font_title, (255, 255, 255), (400, 50, 400, 50))
+    font = pygame.font.Font(None, 32)
+    explication_lines = [
+        "OPEN your thinking ability",
+    ]
+    y_offset = 150
+    explication_texts = []
+    for line in explication_lines:
+        explication_texts.append(Text(line, font, (255, 255, 255), (50, y_offset, 900, 50)))
+        y_offset += 50
+    font_button = pygame.font.Font(None, 36)
+    quit_button = Button("OK", font_button, (255, 255, 255), (400, 550, 200, 50))
+    buttons = [quit_button]
+    while True:
+        screen.fill((0, 0, 0))
+        menu_title.draw(screen)
+        for exp_text in explication_texts:
+            exp_text.draw(screen)
+        for button in buttons:
+            button.draw(screen)
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+            for button in buttons:
+                if button.handle_event(event, screen) and button.text == "OK":
+                    return False
+
 def open_safe(screen):
+    explication_open_safe(screen)
     font = pygame.font.Font(None, 36)
     window_width, window_height = screen.get_size()
     safe_closed = pygame.image.load("ressources/Safe_craft(1).png")
@@ -34,7 +67,7 @@ def open_safe(screen):
         afficher_texte("Combinaison actuelle: " + "-".join(map(str, combinaison_entree)), 50, 100, font, screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                return False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
