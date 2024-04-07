@@ -51,7 +51,7 @@ def print_game_over(screen):
     gameover_title = Text("GAME OVER", font_title, (255, 0, 0), (550, 100, 200, 50))
     font = pygame.font.Font(None, 36)
     window_width, window_height = screen.get_size()
-    quit_button = Button("Quit", font, (255, 0, 0), ((window_width - 200) // 2, (window_height + 50) // 2, 200, 50))
+    quit_button = Button("Go back to Menu", font, (255, 0, 0), ((window_width - 200) // 2, (window_height + 50) // 2, 200, 50))
     buttons = [quit_button]
     while True:
         screen.fill((0, 0, 0))
@@ -63,7 +63,7 @@ def print_game_over(screen):
             if event.type == pygame.QUIT:
                 return False
             for button in buttons:
-                if button.handle_event(event, screen) and button.text == "Quit":
+                if button.handle_event(event, screen) and button.text == "Go back to Menu":
                      return False
 
 def mini_game2(screen):
@@ -108,7 +108,6 @@ def check_collision_indice(player, tab, mini_games, screen, sound_effect):
             tab[tile_y] = tab[tile_y][:tile_x] + ' ' + tab[tile_y][tile_x + 1:]
             player.score += 1
             display_message(screen, "You win", (255, 255, 0))
-            player.score += 1
 
 def check_collision_exit(player, tab, nb):
     player_rect = player.rect
