@@ -10,6 +10,8 @@ import pygame
 import random
 from player import Player
 from button import Button
+from open_safe import *
+from Labyrinthe import *
 
 def close_window():
     for event in pygame.event.get():
@@ -56,26 +58,6 @@ def print_game_over(screen):
             for button in buttons:
                 if button.handle_event(event, screen) and button.text == "Quit":
                      return False
-
-def mini_game0(screen):
-    font = pygame.font.Font(None, 36)
-    window_width, window_height = screen.get_size()
-    start_button = Button("Win", font, (0, 0, 0), ((window_width - 200) // 2, (window_height - 50) // 2, 200, 50))
-    quit_button = Button("minigame0", font, (0, 0, 0), ((window_width - 200) // 2, (window_height + 50) // 2 + 20, 200, 50))
-    buttons = [start_button, quit_button]
-    while True:
-        screen.fill((255, 255, 255))
-        for button in buttons:
-            button.draw(screen)
-        pygame.display.flip()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return False
-            for button in buttons:
-                if button.handle_event(event, screen) and button.text == "Win":
-                    return True
-                if button.handle_event(event, screen) and button.text == "minigame0":
-                    return False
 
 def mini_game1(screen):
     font = pygame.font.Font(None, 36)
@@ -181,7 +163,7 @@ def run_game(screen):
     image3 = pygame.image.load("ressources/key.png")
     image4 = pygame.image.load("ressources/arrow.png")
     asset_dico = {'#': image, ' ': image2, 'x': image3, 'o': image4}
-    mini_games = [mini_game0, mini_game1, mini_game2]
+    mini_games = [open_safe, labyrinthe, mini_game2]
     ok = 0
     while True:
         if close_window() == False:
