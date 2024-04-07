@@ -8,9 +8,9 @@
 
 import pygame
 import random
-from player import Player
-from button import Button
-from text import Text
+from src.player import Player
+from src.button import Button
+from src.text import Text
 
 def close_window():
     for event in pygame.event.get():
