@@ -35,7 +35,7 @@ def afficher_texte(texte, x, y, font, screen):
 
 def explication_labyrinth(screen):
     font_title = pygame.font.Font(None, 64)
-    menu_title = Text("Labyrinth", font_title, (255, 255, 255), (400, 50, 400, 50))
+    menu_title = Text("Treasur Contest", font_title, (255, 255, 255), (400, 50, 400, 50))
     font = pygame.font.Font(None, 32)
     explication_lines = [
         "Treasur Contest is a  game.",
@@ -48,10 +48,10 @@ def explication_labyrinth(screen):
     y_offset = 150
     explication_texts = []
     for line in explication_lines:
-        explication_texts.append(Text(line, font, (255, 255, 255), (50, y_offset, 900, 50)))
+        explication_texts.append(Text(line, font, (255, 255, 255), (150, y_offset, 900, 100)))
         y_offset += 50
     font_button = pygame.font.Font(None, 36)
-    quit_button = Button("OK", font_button, (255, 255, 255), (400, 550, 200, 50))
+    quit_button = Button("OK", font_button, (255, 255, 255), (500, 550, 200, 100))
     buttons = [quit_button]
     while True:
         screen.fill((0, 0, 0))

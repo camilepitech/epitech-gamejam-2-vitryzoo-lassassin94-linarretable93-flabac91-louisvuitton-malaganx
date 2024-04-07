@@ -57,10 +57,10 @@ def explication_tic_tac_toe(screen):
     y_offset = 150
     explication_texts = []
     for line in explication_lines:
-        explication_texts.append(Text(line, font, (255, 255, 255), (50, y_offset, 900, 50)))
+        explication_texts.append(Text(line, font, (255, 255, 255), (250, y_offset, 900, 100)))
         y_offset += 50
     font_button = pygame.font.Font(None, 36)
-    quit_button = Button("OK", font_button, (255, 255, 255), (400, 550, 200, 50))
+    quit_button = Button("OK", font_button, (255, 255, 255), (550, 550, 200, 100))
     buttons = [quit_button]
     while True:
         screen.fill((0, 0, 0))
