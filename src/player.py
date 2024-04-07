@@ -46,4 +46,4 @@ class Player:
             screen.blit(self.life, (i * 20, 0))
         font = pygame.font.Font(None, 36)
         score_text = font.render(f"Score: {self.score}", True, (255, 255, 255))
-        screen.blit(score_text, (0, 20)) 
+        screen.blit(score_text, (0, 20))
