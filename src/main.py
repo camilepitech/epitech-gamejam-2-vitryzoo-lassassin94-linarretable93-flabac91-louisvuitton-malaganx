@@ -10,6 +10,7 @@ import pygame
 import random
 from player import Player
 from button import Button
+from text import Text
 
 def close_window():
     for event in pygame.event.get():
@@ -41,12 +42,15 @@ def put_indice_map(tab):
         put_indice_map(tab)
 
 def print_game_over(screen):
+    font_title = pygame.font.Font(None, 64)
+    gameover_title = Text("GAME OVER", font_title, (255, 0, 0), (550, 100, 200, 50))
     font = pygame.font.Font(None, 36)
     window_width, window_height = screen.get_size()
     quit_button = Button("Quit", font, (255, 0, 0), ((window_width - 200) // 2, (window_height + 50) // 2, 200, 50))
     buttons = [quit_button]
     while True:
         screen.fill((0, 0, 0))
+        gameover_title.draw(screen)
         for button in buttons:
             button.draw(screen)
         pygame.display.flip()
@@ -59,9 +63,8 @@ def print_game_over(screen):
 
 def mini_game0(screen):
     font = pygame.font.Font(None, 36)
-    window_width, window_height = screen.get_size()
-    start_button = Button("Win", font, (0, 0, 0), ((window_width - 200) // 2, (window_height - 50) // 2, 200, 50))
-    quit_button = Button("minigame0", font, (0, 0, 0), ((window_width - 200) // 2, (window_height + 50) // 2 + 20, 200, 50))
+    start_button = Button("Win", font, (0, 0, 0), (550, 500, 200, 50))
+    quit_button = Button("minigame0", font, (0, 0, 0), (550, 550, 200, 50))
     buttons = [start_button, quit_button]
     while True:
         screen.fill((255, 255, 255))
@@ -79,9 +82,8 @@ def mini_game0(screen):
 
 def mini_game1(screen):
     font = pygame.font.Font(None, 36)
-    window_width, window_height = screen.get_size()
-    start_button = Button("Win", font, (0, 0, 0), ((window_width - 200) // 2, (window_height - 50) // 2, 200, 50))
-    quit_button = Button("minigame1", font, (0, 0, 0), ((window_width - 200) // 2, (window_height + 50) // 2 + 20, 200, 50))
+    start_button = Button("Win", font, (0, 0, 0), (550, 500, 200, 50))
+    quit_button = Button("minigame1", font, (0, 0, 0), (550, 550, 200, 50))
     buttons = [start_button, quit_button]
     while True:
         screen.fill((255, 255, 255))
@@ -99,9 +101,8 @@ def mini_game1(screen):
 
 def mini_game2(screen):
     font = pygame.font.Font(None, 36)
-    window_width, window_height = screen.get_size()
-    start_button = Button("Win", font, (0, 0, 0), ((window_width - 200) // 2, (window_height - 50) // 2, 200, 50))
-    quit_button = Button("minigame2", font, (0, 0, 0), ((window_width - 200) // 2, (window_height + 50) // 2 + 20, 200, 50))
+    start_button = Button("Win", font, (0, 0, 0), (550, 500, 200, 50))
+    quit_button = Button("minigame2", font, (0, 0, 0), (550, 550, 200, 50))
     buttons = [start_button, quit_button]
     while True:
         screen.fill((255, 255, 255))
@@ -117,7 +118,7 @@ def mini_game2(screen):
                 if button.handle_event(event, screen) and button.text == "minigame2":
                     return False
 
-def check_collision_indice(player, tab, mini_games, screen):
+def check_collision_indice(player, tab, mini_games, screen, sound_effect):
     player_rect = player.rect
     player_x, player_y = player_rect.centerx, player_rect.centery
     tile_x = player_x // 48
@@ -126,6 +127,7 @@ def check_collision_indice(player, tab, mini_games, screen):
         if mini_games[random.randint(0, 2)](screen) == False:
             player.nb_life -= 1
             player.rect.y -= 50
+            sound_effect.play()
         else:
             tab[tile_y] = tab[tile_y][:tile_x] + ' ' + tab[tile_y][tile_x + 1:]
             player.score += 1
@@ -183,6 +185,8 @@ def run_game(screen):
     asset_dico = {'#': image, ' ': image2, 'x': image3, 'o': image4}
     mini_games = [mini_game0, mini_game1, mini_game2]
     ok = 0
+    sound_effect = pygame.mixer.Sound("ressources/damage.ogg")
+    sound_effect.set_volume(4.0)
     while True:
         if close_window() == False:
             return
@@ -193,7 +197,7 @@ def run_game(screen):
         draw_map(screen, tab, asset_dico)
         keys = pygame.key.get_pressed()
         player.move(keys, dt)
-        check_collision_indice(player, tab, mini_games, screen)
+        check_collision_indice(player, tab, mini_games, screen, sound_effect)
         if ok == 1:
             nb, ok = check_collision_exit(player, tab, nb)
         player.draw(screen)
@@ -206,13 +210,21 @@ def run_game(screen):
         dt = clock.tick(60) / 1000
 
 def main_menu(screen):
-    font = pygame.font.Font(None, 36)
-    window_width, window_height = screen.get_size()
-    start_button = Button("Click to Start", font, (0, 0, 0), ((window_width - 200) // 2, (window_height - 50) // 2, 200, 50), run_game)
-    quit_button = Button("Quit", font, (0, 0, 0), ((window_width - 200) // 2, (window_height + 50) // 2 + 20, 200, 50))
+    pygame.mixer.music.load("ressources/what'snewhoppy.wav")
+    pygame.mixer.music.play(-1)
+    pygame.mixer.music.set_volume(0.2)
+    image = pygame.image.load("ressources/menu.png")
+    image = pygame.transform.scale(image, (1440, 1000))
+    font_title = pygame.font.Font(None, 64)
+    menu_title = Text("Hoppy's Escape", font_title, (255, 255, 255), (550, 100, 200, 50))
+    font_button = pygame.font.Font(None, 36)
+    start_button = Button("Click to Start", font_button, (255, 255, 255), (550, 500, 200, 50), run_game)
+    quit_button = Button("Quit", font_button, (255, 255, 255), (550, 550, 200, 50))
     buttons = [start_button, quit_button]
     while True:
         screen.fill((255, 255, 255))
+        screen.blit(image, (0, 0))
+        menu_title.draw(screen)
         for button in buttons:
             button.draw(screen)
         pygame.display.flip()
