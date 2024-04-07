@@ -210,7 +210,7 @@ def run_game(screen):
         dt = clock.tick(60) / 1000
 
 def main_menu(screen):
-    pygame.mixer.music.load("ressources/what'snewhoppy.wav")
+    pygame.mixer.music.load("ressources/whatsnewhoppy.wav")
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.2)
     image = pygame.image.load("ressources/menu.png")
