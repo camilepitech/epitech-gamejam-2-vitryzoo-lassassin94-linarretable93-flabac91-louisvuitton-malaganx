@@ -38,7 +38,12 @@ def explication_labyrinth(screen):
     menu_title = Text("Labyrinth", font_title, (255, 255, 255), (400, 50, 400, 50))
     font = pygame.font.Font(None, 32)
     explication_lines = [
-        "OPEN your curiosity",
+        "Treasur Contest is a  game.",
+        "",
+        "Your goal is to open and find all Hoppy's thing in Epitech.",
+        "Once you found all the furniture, hoppy will be satisfied",
+        "",
+        "Are you ready to OPEN all the chest?",
     ]
     y_offset = 150
     explication_texts = []
