@@ -7,6 +7,8 @@
 #
 import pygame
 import random
+from src.text import Text
+from src.button import Button
 
 class Square():
     def __init__(self):
@@ -28,7 +30,43 @@ def create_square(all_squares):
     square = Square()
     all_squares.append(square)
 
+def explication_click_speed(screen):
+    font_title = pygame.font.Font(None, 64)
+    menu_title = Text("Click_speed", font_title, (255, 255, 255), (550, 100, 200, 50))
+    font = pygame.font.Font(None, 32)
+    explication_lines = [
+        "Click_speed is an exhilarating challenge that exerce your reflexes to the lime.",
+        "",
+        "Your objective is simple: click on the moving targets as quickly as possible to score points.",
+        "You must achieve a minimum score of 10 to succeed, but beware, you only have 3 chances.",
+        "",
+        "Are you ready to OPEN your reflexes and conquer Click_speed?"
+    ]
+    y_offset = 250
+    explication_texts = []
+    for line in explication_lines:
+        explication_texts.append(Text(line, font, (255, 255, 255), (550, y_offset, 200, 50)))
+        y_offset += 50
+    font_button = pygame.font.Font(None, 36)
+    quit_button = Button("OK", font_button, (255, 255, 255), (550, 550, 200, 50))
+    buttons = [quit_button]
+    while True:
+        screen.fill((0, 0, 0))
+        menu_title.draw(screen)
+        for exp_text in explication_texts:
+            exp_text.draw(screen)
+        for button in buttons:
+            button.draw(screen)
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+            for button in buttons:
+                if button.handle_event(event, screen) and button.text == "OK":
+                    return False
+
 def click_speed(screen):
+    explication_click_speed(screen)
     clock = pygame.time.Clock()
     window_width, window_height = screen.get_size()
     doom = pygame.image.load("ressources/font_doom.jpg")
