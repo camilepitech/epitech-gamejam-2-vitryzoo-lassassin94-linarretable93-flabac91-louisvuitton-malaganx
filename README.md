@@ -4,8 +4,8 @@
 Hoppy's Escape est un jeu en Python où vous incarnez Hoppy, un chat qui essaie de rentrer chez lui à EPITECH. Pour ce faire, Hoppy doit récupérer toutes les clés dispersées sur la map en résolvant des énigmes. Cependant, la sortie de la map n'est peut-être pas aussi simple qu'une porte à ouvrir...
 
 ## Installation
-1. Assurez-vous d'avoir Python installé sur votre système. Si ce n'est pas le cas, vous pouvez le télécharger depuis [le site officiel de Python](https://www.python.org/).
-2. Clonez ce dépôt sur votre machine :
+1. Assurez-vous d'avoir Python installé sur votre machine. Si ce n'est pas le cas, vous pouvez le télécharger depuis [le site officiel de Python](https://www.python.org/).
+2. Clonez ce repo sur votre machine :
     ```
     git clone https://github.com/votre-utilisateur/epitech-gamejam-2-vitryzoo-lassassin94-linarretable93-flabac91-louisvuitton-malaganx.git
     ```
