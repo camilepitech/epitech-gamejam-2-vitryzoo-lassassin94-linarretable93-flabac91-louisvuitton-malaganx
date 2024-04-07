@@ -24,7 +24,12 @@ def explication_open_safe(screen):
     menu_title = Text("Open safe", font_title, (255, 255, 255), (400, 50, 400, 50))
     font = pygame.font.Font(None, 32)
     explication_lines = [
-        "OPEN your thinking ability",
+        "Open Safe is a culture game.",
+        "",
+        "Your goal is to find the combinaition and open the chest.",
+        "You have 1 chance to find the code, be wise.",
+        "",
+        "Are you ready to OPEN your memory?",
     ]
     y_offset = 150
     explication_texts = []
