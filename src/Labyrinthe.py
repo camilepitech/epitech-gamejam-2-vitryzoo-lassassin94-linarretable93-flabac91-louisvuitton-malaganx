@@ -8,6 +8,8 @@
 import pygame
 import random
 from src.player import Player
+from src.text import Text
+from src.button import Button
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -31,7 +33,39 @@ def afficher_texte(texte, x, y, font, screen):
     pygame.display.flip()
     pygame.time.delay(1000)
 
+def explication_labyrinth(screen):
+    font_title = pygame.font.Font(None, 64)
+    menu_title = Text("Labyrinth", font_title, (255, 255, 255), (400, 50, 400, 50))
+    font = pygame.font.Font(None, 32)
+    explication_lines = [
+        "OPEN your curiosity",
+    ]
+    y_offset = 150
+    explication_texts = []
+    for line in explication_lines:
+        explication_texts.append(Text(line, font, (255, 255, 255), (50, y_offset, 900, 50)))
+        y_offset += 50
+    font_button = pygame.font.Font(None, 36)
+    quit_button = Button("OK", font_button, (255, 255, 255), (400, 550, 200, 50))
+    buttons = [quit_button]
+    while True:
+        screen.fill((0, 0, 0))
+        menu_title.draw(screen)
+        for exp_text in explication_texts:
+            exp_text.draw(screen)
+        for button in buttons:
+            button.draw(screen)
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+            for button in buttons:
+                if button.handle_event(event, screen) and button.text == "OK":
+                    return False
+
+
 def labyrinthe(screen):
+    explication_labyrinth(screen)
     dt = 0
     keys = 0
     window_width, window_height = screen.get_size()
@@ -47,14 +81,13 @@ def labyrinthe(screen):
     chests = [Chest(random.randint(100, window_width - CHEST_SIZE - 100),
                     random.randint(100, window_height - CHEST_SIZE - 100)) for _ in range(5)]
     contenus = ["Paté pour chat", "Souris", "Pelotte de laine", "Tasse de café", "Herbe a chat (illegale)"]
-    running = True
-    while running:
+    while True:
         screen.blit(epitech, (0, 0))
         dt = clock.tick(60) / 1000
         keys = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                return False
         for chest in chests:
             if not chest.opened:
                 screen.blit(safe_closed, (chest.rect.x, chest.rect.y))
