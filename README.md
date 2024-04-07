@@ -5,22 +5,27 @@ Hoppy's Escape est un jeu en Python où vous incarnez Hoppy, un chat qui essaie 
 
 ## 📂 Installation
 1. Assurez-vous d'avoir Python installé sur votre machine. Si ce n'est pas le cas, vous pouvez le télécharger depuis [le site officiel de Python](https://www.python.org/). Pour l'installer directement sur Fedora :
+
     ```
     sudo dnf install python
     ```
 2. Clonez ce repo sur votre machine :
+
     ```
     git clone https://github.com/votre-utilisateur/epitech-gamejam-2-vitryzoo-lassassin94-linarretable93-flabac91-louisvuitton-malaganx.git
     ```
 3. Naviguez vers le répertoire du jeu :
+
     ```
     cd epitech-gamejam-2-vitryzoo-lassassin94-linarretable93-flabac91-louisvuitton-malaganx
     ```
 4. Installez les prérequis :
+
     ```
     pip install -r requirements.txt
     ```
 5. Lancez le jeu en exécutant le fichier principal :
+
     ```
     python main.py
     ```
